@@ -1,5 +1,6 @@
 ﻿
 using Core.Entitites;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,16 @@ namespace ECommerce.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly StoreContext _context;
-        public ProductController(StoreContext context)
+        private readonly IProductRepository _repository;
+        public ProductController(IProductRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
 
-            var products = await _context.Products.ToListAsync();
+            var products = await _repository.GetProductsAsync();
             return Ok(products);
         }
 
@@ -29,7 +30,7 @@ namespace ECommerce.Controllers
         public async Task<ActionResult<Product>> GetProductById(int Id)
         {
 
-            var products = await _context.Products.FindAsync(Id);
+            var products = await _repository.GetProductByIdAsync(Id);
             return Ok(products);
         }
     }
