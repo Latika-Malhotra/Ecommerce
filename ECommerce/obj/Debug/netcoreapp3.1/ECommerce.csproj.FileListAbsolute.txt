@@ -81,8 +81,10 @@ C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Deb
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\obj\Debug\netcoreapp3.1\ECommerce.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\Core.dll
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\Infrastructure.dll
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\Infrastructure.pdb
 C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\Core.pdb
+C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Latika Malhotra\Desktop\Angular_And_NetCore\ECommerce\ECommerce\obj\Debug\netcoreapp3.1\ECommerce.MvcApplicationPartsAssemblyInfo.cache

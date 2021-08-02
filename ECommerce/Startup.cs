@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Interfaces;
+using ECommerce.Helpers;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +31,10 @@ namespace ECommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(IGenericRepository<>),(typeof(GenericReporitory<>)));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddControllers();
+            services.AddAutoMapper(typeof(MappingProfiles));
             //services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContextPool<StoreContext>(x => x.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
         }
