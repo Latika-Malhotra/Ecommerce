@@ -5,6 +5,7 @@ using Core.Entitites.Specifications;
 using Core.Interfaces;
 using ECommerce.Dtos;
 using ECommerce.Errors;
+using ECommerce.Helpers;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,11 +33,15 @@ namespace ECommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productParams)
         {
-            var spec = new ProductsWithTypesAndBrands();
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+            var countSpec = new ProductsWithTypesAndBrandsSpecification(productParams);
+            var totalItems = await _productRepo.CountAsync(spec);
+            
             var products = await _productRepo.ListAsync(spec);
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+            return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex,productParams.PageSize,totalItems,data));
             
         }
 
@@ -45,7 +50,7 @@ namespace ECommerce.Controllers
         [ProducesResponseType(typeof(ApiResponse),(StatusCodes.Status404NotFound))]
         public async Task<ActionResult<ProductToReturnDto>> GetProductById(int Id)
         {
-            var spec = new ProductsWithTypesAndBrands(Id);
+            var spec = new ProductsWithTypesAndBrandsSpecification(Id);
             var products = await _productRepo.GetEntityWithSpec(spec);
 
             if (products == null) return NotFound(new ApiResponse(404));
