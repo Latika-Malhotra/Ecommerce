@@ -4,7 +4,9 @@ using Core.Entitites;
 using Core.Entitites.Specifications;
 using Core.Interfaces;
 using ECommerce.Dtos;
+using ECommerce.Errors;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace ECommerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseApiController
     {
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductType> _productTypeRepo;
@@ -30,41 +32,26 @@ namespace ECommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrands();
             var products = await _productRepo.ListAsync(spec);
-
-            return products.Select(product => new ProductToReturnDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                PictureUrl = product.PictureUrl,
-                Price = product.Price,
-                ProductBrand = product.productBrand.Name,
-                ProductType = product.ProductType.Name
-
-            }).ToList();
+            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse),(StatusCodes.Status404NotFound))]
         public async Task<ActionResult<ProductToReturnDto>> GetProductById(int Id)
         {
             var spec = new ProductsWithTypesAndBrands(Id);
             var products = await _productRepo.GetEntityWithSpec(spec);
-            return _mapper.Map<Product, ProductToReturnDto>(products);
-            //return new ProductToReturnDto
-            //{
-            //    Id = products.Id,
-            //    Name = products.Name,
-            //    Description = products.Description,
-            //    PictureUrl = products.PictureUrl,
-            //    Price = products.Price,
-            //    ProductBrand = products.productBrand.Name,
-            //    ProductType = products.ProductType.Name
-            //};
-            //return Ok(products);
+
+            if (products == null) return NotFound(new ApiResponse(404));
+            
+            return Ok(_mapper.Map<Product, ProductToReturnDto>(products));
+            
         }
 
 
