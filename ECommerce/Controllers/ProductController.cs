@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : BaseApiController
@@ -59,9 +60,7 @@ namespace ECommerce.Controllers
             
         }
 
-
-
-        [HttpGet("{types}")]
+        [HttpGet("types")]
         public async Task<ActionResult<ProductType>> GetProductTypes()
         {
 
@@ -69,7 +68,7 @@ namespace ECommerce.Controllers
             return Ok(productTypes);
         }
         
-        [HttpGet("{brands}")]
+        [HttpGet("brands")]
         public async Task<ActionResult<ProductBrand>> GetProductBrand()
         {
 
